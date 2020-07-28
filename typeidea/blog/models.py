@@ -17,10 +17,13 @@ class Category(models.Model):
                                          verbose_name='状态')
     is_nav = models.BooleanField(default=False, verbose_name='是否为导航')
     owner = models.ForeignKey(User, verbose_name='作者')
-    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
 
     class Meta:
         verbose_name = verbose_name_plural = '分类'
+
+    def __str__(self):
+        return self.name
 
 
 class Tag(models.Model):
@@ -40,6 +43,9 @@ class Tag(models.Model):
 
     class Meta:
         verbose_name = verbose_name_plural = '标签'
+
+    def __str__(self):
+        return self.name
 
 
 class Post(models.Model):
@@ -66,3 +72,6 @@ class Post(models.Model):
     class Meta:
         verbose_name = verbose_name_plural = '文章'
         ordering = ['-id']  # 根据id进行降序排序
+
+    def __str__(self):
+        return self.title
