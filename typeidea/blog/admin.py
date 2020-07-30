@@ -13,7 +13,7 @@ from .models import Category, Tag, Post
 
 class PostInline(admin.TabularInline):  # StackedInline样式不同
     fields = ('title', 'desc')
-    extra = 1
+    extra = 1  # 控制额外多几个
     model = Post
 
 
