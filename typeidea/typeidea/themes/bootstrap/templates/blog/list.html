@@ -12,19 +12,22 @@
 
 {% block main %}
     {% for post in post_list %}
-    <div class="card-body">
-        <h5 class="card-title">
-            <a href="{% url 'post-detail' post.id %}">{{ post.title }}</a>
-        </h5>
-        <span class="card-link">作者：<a href="#">{{ post.owner.username }}</a></span>
-        <span class="card-link">分类：<a href="{% url 'category-list' post.category.id %}">{{ post.category.name }}</a></span>
-        <span class="card-link">标签：
-            {% for tag in post.tag.all %}
-            <a href="{% url 'tag-list' tag.id %}">{{ tag.name }}</a>
-            {% endfor %}
-        </span>
-        <p class="card-text">{{ post.desc }}<a href="{% url 'post-detail' post.id %}">完整内容</a></p>
-        <p class="card-text">创建时间：<a href="#">{{ post.created_time }}</a></p>
+    <div class="card post" style="margin-bottom: 5px;">
+        <div class="card-body">
+            <h5 class="card-title">
+                <a href="{% url 'post-detail' post.id %}">{{ post.title }}</a>
+            </h5>
+            <span class="card-link">作者：<a href="{% url 'author' post.owner_id %}">{{ post.owner.username }}</a></span>
+            <span class="card-link">分类：<a href="{% url 'category-list' post.category.id %}">{{ post.category.name }}</a></span>
+            <span class="card-link">标签：
+                {% for tag in post.tag.all %}
+                <a href="{% url 'tag-list' tag.id %}">{{ tag.name }}</a>
+                {% endfor %}
+            </span>
+            <hr>
+            <p class="card-text">{{ post.desc }}<a href="{% url 'post-detail' post.id %}">完整内容</a></p>
+            <p class="card-text">创建时间：<a href="#">{{ post.created_time }}</a></p>
+        </div>
     </div>
     {% endfor %}
 
