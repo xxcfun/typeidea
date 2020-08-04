@@ -14,7 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 import xadmin
-from django.conf.urls import url
+from django.conf import settings
+from django.conf.urls import url, include
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.sitemaps import views as sitemap_views
 
@@ -24,7 +26,6 @@ from blog.views import IndexView, CategoryView, TagView, PostDetailView, SearchV
 from comment.views import CommentView
 from config.views import links
 from typeidea.autocomplete import CategoryAutocomplete, TagAutocomplete
-from typeidea.custom_site import custom_site
 
 urlpatterns = [
     url(r'^$', IndexView.as_view(), name='index'),
@@ -40,7 +41,8 @@ urlpatterns = [
     url(r'^sitemap\.xml$', sitemap_views.sitemap, {'sitemaps': {'posts': PostSitemap}}),
     url(r'^category-autocomplete/$', CategoryAutocomplete.as_view(), name='category-autocomplete'),
     url(r'^tag-autocomplete/$', TagAutocomplete.as_view(), name='tag-autocomplete'),
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 
     url(r'^super_admin/', admin.site.urls, name='super-admin'),
     url(r'^admin/', xadmin.site.urls, name='xadmin'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
